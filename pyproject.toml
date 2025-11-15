@@ -44,7 +44,7 @@ scipy_openblas64 = ["lib/*", "include/*", "lib/pkgconfig/*", "lib/cmake/openblas
 before-build = "bash ci-before-build.sh"
 repair-wheel-command = "bash ci-repair-wheel.sh {dest_dir} {wheel}"
 test-command = "cd {package} && bash ci-test.sh "
-# environment = { CC = "/opt/clang/bin/clang", CXX = "/opt/clang/bin/clang++", LDFLAGS = "-fuse-ld=lld" }
+environment = { CC = "/opt/clang/bin/clang", CXX = "/opt/clang/bin/clang++", LDFLAGS = "-fuse-ld=lld" }
 environment-pass = [
   "OPENBLAS_COMMIT",
   "MACOSX_DEPLOYMENT_TARGET",
