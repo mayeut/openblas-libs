@@ -58,7 +58,7 @@ function clean_code {
     echo after git fetch origin
     git checkout $build_commit
     echo after git checkout $build_commit
-    git clean -fxd 
+    git clean -fxd
     echo after git clean
     git submodule update --init --recursive
     echo after git submodule update
@@ -182,13 +182,13 @@ EOF
             ;;
         *-s390x)
             # The TargetList.txt has only ZARCH_GENERIC, Z13, Z14. Not worth
-            # messing with dynamic lists and targets.
+            # messing with dynamic lists.
             local bitness=64
+            local target="ZARCH_GENERIC"
             ;;
         *-ppc64le)
             local bitness=64
             local target="POWER8"
-            local dynamic_list="POWER8 POWER10"
             ;;
         Linux-loongarch64)
             local target="GENERIC"
@@ -220,9 +220,15 @@ EOF
         echo -n > utest/test_dsdot.c
         echo "Due to the qemu versions 7.2 causing utest cases to fail,"
         echo "the utest dsdot:dsdot_n_1 have been temporarily disabled."
+    elif [ "$plat" == "s390x" ]; then
+        echo -n > utest/test_extensions/test_samin.c
+        echo -n > utest/test_extensions/test_damin.c
+        echo "the utest samin/damin have been temporarily disabled."
+        echo "QEMU does not support some instructions"
     fi
     if [ -n "$dynamic_list" ]; then
         CFLAGS="$CFLAGS -fvisibility=protected -Wno-uninitialized" \
+        FFLAGS="$FFLAGS -Wno-conversion -Wno-uninitialized -Wno-maybe-uninitialized -Wno-unused-dummy-argument" \
         make BUFFERSIZE=20 DYNAMIC_ARCH=1 QUIET_MAKE=1 \
             USE_OPENMP=0 NUM_THREADS=64 \
             DYNAMIC_LIST="$dynamic_list" \
@@ -230,6 +236,7 @@ EOF
             TARGET="$target"
     else
         CFLAGS="$CFLAGS -fvisibility=protected -Wno-uninitialized" \
+        FFLAGS="$FFLAGS -Wno-conversion -Wno-uninitialized -Wno-maybe-uninitialized -Wno-unused-dummy-argument" \
         make BUFFERSIZE=20 DYNAMIC_ARCH=1 QUIET_MAKE=1 \
             USE_OPENMP=0 NUM_THREADS=64 \
             BINARY="$bitness" $interface_flags \

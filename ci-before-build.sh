@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-# Most of the content in this file comes from https://github.com/multi-build/multibuild, with some modifications 
+# Most of the content in this file comes from https://github.com/multi-build/multibuild, with some modifications
 # Follow the license below
 
 
@@ -87,6 +87,8 @@ else
     # Default Manylinux version
     MB_ML_VER=${MB_ML_VER:-2014}
   fi
+  ./install-static-clang.sh
+  export PATH=/opt/clang/bin:$PATH
 fi
 
 # Work round bug in travis xcode image described at
