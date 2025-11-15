@@ -59,7 +59,7 @@ jobs:
           - { os: ubuntu-latest, PLAT: s390x, INTERFACE64: '1', MB_ML_VER: '_2_28', MB_ML_LIBC: manylinux}
 
     env:
-      NIGHTLY: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+      NIGHTLY: ${{ github.event_name == 'schedule' }} # || github.event_name == 'workflow_dispatch' }}
       MB_ML_LIBC: ${{ matrix.MB_ML_LIBC }}
       MB_ML_VER: ${{ matrix.MB_ML_VER }}
       INTERFACE64: ${{ matrix.INTERFACE64 }}
