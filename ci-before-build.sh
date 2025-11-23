@@ -87,8 +87,8 @@ else
     # Default Manylinux version
     MB_ML_VER=${MB_ML_VER:-2014}
   fi
-  ./tools/install-static-clang.sh
-  export PATH=/opt/clang/bin:$PATH
+  # ./tools/install-static-clang.sh
+  # export PATH=/opt/clang/bin:$PATH
 fi
 
 # Work round bug in travis xcode image described at
