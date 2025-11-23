@@ -216,6 +216,8 @@ EOF
     git config --global --add safe.directory '*'
     pushd OpenBLAS
     patch_source
+    # force failure when fortran compiler is no detected
+    sed -i.bak 's/info OpenBLAS: Detecting fortran compiler failed/error OpenBLAS: Detecting fortran compiler failed/g' Makefile
     echo start building
     if [ "$plat" == "loongarch64" ]; then
         # https://github.com/OpenMathLib/OpenBLAS/blob/develop/.github/workflows/loongarch64.yml#L65
